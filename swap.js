@@ -223,10 +223,20 @@ async function swapUSDCToETH() {
         const deadline = Math.floor(Date.now() / 1000) + 60 * 20;
 
         // Минимальное количество токенов на выходе
+        // Получаем сумму на выходе, которую может предложить нам контракт пула
+        const rounterContract = new ethers.Contract(USDC_ETH_POOL_ADDRESS, SYNCSWAP_POOL_ABI, wallet)
+        const expectedOutput = await rounterContract.getAmountOut(
+          USDC_ADDRESS,
+          AMOUNT_TO_SWAP,
+          wallet
+        )
+        console.log(expectedOutput)
+        console.log(BigInt)
+        console.log(`>>> Текущий курс: ${ethers.formatEther(expectedOutput, 18)} ETH`)
         // Защищаемся от проскальзывания, требуя минимум 80% от ожидаемой суммы
-        // 0.05 USDC примерно = 0.00008 ETH (по текущему курсу)
-        const expectedOutput = ethers.parseEther('0.00008'); // Минимум ETH, которое хотим получить
-        const minAmountOut = expectedOutput; // Раньше было 0
+        
+        const minAmountOut = expectedOutput / 100n * 80n
+        console.log(`>>> Получим с защитой от проскальзования ${ethers.formatEther(minAmountOut, 18)} ETH`)
 
         // Инициализация контракта роутера
         const routerContract = new ethers.Contract(ROUTER_ADDRESS, SYNCSWAP_ROUTER_ABI, wallet);

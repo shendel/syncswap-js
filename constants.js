@@ -17,7 +17,7 @@ export const SYNCSWAP_POOL_ABI = [
     'function token0() external view returns (address)',
     'function token1() external view returns (address)',
     'function swap(bytes data, address sender, address callback, bytes callbackData) external returns (uint256, uint256)',
-    'function getAmountOut(bytes data, address sender) external view returns (uint256)',
+    'function getAmountOut(address tokenIn, uint256 amountIn, address sender) external view returns (uint256)',
     'function liquidity() external view returns (uint256)',
     // Функции для внутреннего использования
     'function mint(address recipient) external returns (uint256)',
