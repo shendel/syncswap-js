@@ -230,8 +230,7 @@ async function swapUSDCToETH() {
           AMOUNT_TO_SWAP,
           wallet
         )
-        console.log(expectedOutput)
-        console.log(BigInt)
+
         console.log(`>>> Текущий курс: ${ethers.formatEther(expectedOutput, 18)} ETH`)
         // Защищаемся от проскальзывания, требуя минимум 80% от ожидаемой суммы
         
